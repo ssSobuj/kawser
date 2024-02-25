@@ -2,6 +2,7 @@
 import Catagory from "@/component/Catagory";
 import Duas from "@/component/Duas";
 import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 
 export default function Home() {
   const [duas, setDuas] = useState([]);
@@ -28,14 +29,21 @@ export default function Home() {
       console.error("Error fetching data:", error);
     }
   };
-
   const getfilterdua = (cat_id) => {
-    console.log(cat_id);
-    const filterddua = duas.filter((dua) => dua.cat_id === cat_id);
-    setFilterdua(filterddua);
-
-    const filterSubCata = subCat.filter((sc) => sc.cat_id === cat_id);
-    setFilterSubCat(filterSubCata);
+    flushSync(() => setFilterdua([]));
+    // const filterddua = ;
+    flushSync(() =>
+      setFilterdua(() => {
+        return duas.filter((dua) => dua.cat_id === cat_id);
+      })
+    );
+    flushSync(() =>
+      setFilterSubCat(() => {
+        return subCat.filter((sc) => sc.cat_id === cat_id);
+      })
+    );
+    // const filterSubCata = subCat.filter((sc) => sc.cat_id === cat_id);
+    // setFilterSubCat(filterSubCata);
   };
 
   const fetchCatagory = async () => {
@@ -64,14 +72,16 @@ export default function Home() {
     }
   };
 
+
   return (
     <>
       <div className="flex gap-20">
         <Catagory
-          // filterSubCat={filterSubCat}
+          filterSubCat={filterSubCat}
           getfilterdua={getfilterdua}
           cat={cat}
         />
+        {filterdua.length}
         <Duas duas={duas} filterdua={filterdua} />
       </div>
     </>

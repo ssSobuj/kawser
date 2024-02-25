@@ -3,6 +3,11 @@
 import React from "react";
 
 export default function Catagory({ filterSubCat, cat, getfilterdua }) {
+  // {
+  //   filterSubCat &&
+  //     filterSubCat.map((sc) => <p key={sc.id}>{sc.subcat_name_bn}</p>);
+  // }
+  console.log(filterSubCat);
   return (
     <div>
       {cat?.map((c) => (
@@ -13,8 +18,19 @@ export default function Catagory({ filterSubCat, cat, getfilterdua }) {
         >
           <p>{c.cat_name_bn}</p>
           <p>{c.cat_id}</p>
+          {
+            // <ul>
+            //   {filterSubCat.map((sc, i) => (
+            //     <li key={i}>{sc}</li>
+            //   ))}
+            // </ul>
+          }
         </div>
       ))}
+      {/* <div>
+        {filterSubCat &&
+          filterSubCat.map((sc) => <p key={sc.id}>{sc.subcat_name_bn}</p>)}
+      </div> */}
     </div>
   );
 }
